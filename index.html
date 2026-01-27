@@ -3,41 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conflix | Join the Waitlist</title>
+    <title>Conflix | Movies. Friends. Connect.</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #0f172a; color: white; }
-        .gradient-text {
-            background: linear-gradient(90deg, #e11d48, #f43f5e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        
+        /* The Moving Background Animation */
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-scroll {
+            display: flex;
+            width: 200%; /* Double the width for seamless loop */
+            animation: scroll 30s linear infinite;
+        }
+        .movie-card {
+            flex: 0 0 auto;
+            width: 150px;
+            height: 200px;
+            margin: 0 15px;
+            border-radius: 12px;
+            object-fit: cover;
         }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-6">
-    <div class="max-w-md w-full text-center">
-        <h1 class="text-5xl font-extrabold mb-4 tracking-tighter">
-            <span class="gradient-text">CONFLIX</span>
+<body class="bg-white text-black">
+
+    <nav class="flex justify-between items-center px-10 py-6">
+        <div class="text-2xl font-black tracking-tighter">conflix.</div>
+        <div class="text-sm font-medium text-gray-600 cursor-pointer">Contact</div>
+    </nav>
+
+    <main class="flex flex-col items-center text-center mt-12 px-6 relative">
+        <h1 class="text-6xl md:text-7xl font-black tracking-tighter leading-tight">
+            Movies. Friends.<br>Connect.
         </h1>
-        <p class="text-slate-400 text-lg mb-8">
-            The social way to track, discuss, and discover your next favorite movie. Join the exclusive beta.
+        <p class="text-gray-500 mt-4 text-lg max-w-md">
+            Your social guide to the cinematic universe.
         </p>
-        <form action="#" method="POST" class="space-y-4">
+
+        <div class="flex items-center mt-6 space-x-2">
+            <div class="flex -space-x-2">
+                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?u=1" alt="user">
+                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?u=2" alt="user">
+                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?u=3" alt="user">
+            </div>
+            <span class="text-sm text-gray-500 font-medium">Join +900 others</span>
+        </div>
+
+        <form action="YOUR_FORMSPREE_URL" method="POST" class="mt-10 flex flex-col md:flex-row items-center bg-gray-100 rounded-full p-2 w-full max-w-lg border border-gray-200">
             <input 
                 type="email" 
                 name="email" 
-                placeholder="Enter your email address" 
+                placeholder="Email address" 
                 required
-                class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-rose-500 text-white"
+                class="bg-transparent px-6 py-3 flex-grow focus:outline-none text-black"
             >
-            <button 
-                type="submit" 
-                class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 rounded-lg transition duration-200"
-            >
+            <button type="submit" class="bg-black text-white px-8 py-3 rounded-full font-bold hover:bg-gray-800 transition w-full md:w-auto">
                 Get Early Access
             </button>
         </form>
-        <p class="mt-6 text-sm text-slate-500 uppercase tracking-widest">Launching Soon</p>
-    </div>
+
+        <div class="absolute top-[450px] left-0 w-full z-0 overflow-hidden opacity-80 pointer-events-none">
+            <div class="animate-scroll">
+                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=300" class="movie-card">
+                <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=300" class="movie-card">
+                <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=300" class="movie-card">
+                <img src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=300" class="movie-card">
+                <img src="https://images.unsplash.com/photo-1542204172-3c138f3214c7?w=300" class="movie-card">
+                <img src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?w=300" class="movie-card">
+                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=300" class="movie-card">
+                <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=300" class="movie-card">
+                <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=300" class="movie-card">
+                <img src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=300" class="movie-card">
+            </div>
+        </div>
+
+        <div class="mt-20 z-10 drop-shadow-2xl">
+            <img 
+                src="https://images.unsplash.com/photo-1616469829581-73993eb86b02?w=600" 
+                alt="App Mockup" 
+                class="w-[320px] rounded-[3rem] border-[8px] border-black shadow-2xl"
+            >
+        </div>
+
+        <footer class="mt-20 mb-10 text-gray-400 text-xs uppercase tracking-widest">
+            © Ritual Ltd 2026
+        </footer>
+    </main>
 </body>
 </html>
