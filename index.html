@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conflix | Join the Waitlist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0f172a; color: white; }
+        .gradient-text {
+            background: linear-gradient(90deg, #e11d48, #f43f5e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-6">
+    <div class="max-w-md w-full text-center">
+        <h1 class="text-5xl font-extrabold mb-4 tracking-tighter">
+            <span class="gradient-text">CONFLIX</span>
+        </h1>
+        <p class="text-slate-400 text-lg mb-8">
+            The social way to track, discuss, and discover your next favorite movie. Join the exclusive beta.
+        </p>
+        <form action="#" method="POST" class="space-y-4">
+            <input 
+                type="email" 
+                name="email" 
+                placeholder="Enter your email address" 
+                required
+                class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-rose-500 text-white"
+            >
+            <button 
+                type="submit" 
+                class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 rounded-lg transition duration-200"
+            >
+                Get Early Access
+            </button>
+        </form>
+        <p class="mt-6 text-sm text-slate-500 uppercase tracking-widest">Launching Soon</p>
+    </div>
+</body>
+</html>
