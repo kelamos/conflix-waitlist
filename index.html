@@ -3,95 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conflix | Movies. Friends. Connect.</title>
+    <title>Conflix | Never Watch Alone</title>
+    <link rel="icon" type="image/png" href="logo-big.png" >
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; overflow-x: hidden; background-color: #fafafa; }
         
-        /* The Moving Background Animation */
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        @keyframes floatAndSway {
+            0% { transform: translate(0px, 0px) rotate(-2deg); }
+            33% { transform: translate(15px, -10px) rotate(1deg); }
+            66% { transform: translate(-10px, -5px) rotate(-1deg); }
+            100% { transform: translate(0px, 0px) rotate(-2deg); }
         }
-        .animate-scroll {
-            display: flex;
-            width: 200%; /* Double the width for seamless loop */
-            animation: scroll 30s linear infinite;
+        .floating-card {
+            animation: floatAndSway 6s ease-in-out infinite;
+            box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
         }
-        .movie-card {
-            flex: 0 0 auto;
-            width: 150px;
-            height: 200px;
-            margin: 0 15px;
-            border-radius: 12px;
-            object-fit: cover;
+
+        .gradient-bg {
+            background: linear-gradient(to right, #FF3B3B, #FF8E3B);
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #FF3B3B, #FF8E3B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        #success-overlay {
+            backdrop-filter: blur(8px);
+            display: none;
         }
     </style>
 </head>
-<body class="bg-white text-black">
+<body class="text-black">
 
-    <nav class="flex justify-between items-center px-10 py-6">
-        <div class="text-2xl font-black tracking-tighter">conflix.</div>
-        <div class="text-sm font-medium text-gray-600 cursor-pointer">Contact</div>
+    <nav class="flex justify-center md:justify-start items-center px-8 py-6 sticky top-0 z-50 space-x-1.5">
+        <img src="logo-big.png" alt="Conflix Logo" class="h-8 w-8 rounded-lg object-cover border border-gray-100 shadow-sm">
+        <div class="text-3xl font-black tracking-tighter">Conflix</div>
     </nav>
 
-    <main class="flex flex-col items-center text-center mt-12 px-6 relative">
-        <h1 class="text-6xl md:text-7xl font-black tracking-tighter leading-tight">
-            Movies. Friends.<br>Connect.
-        </h1>
-        <p class="text-gray-500 mt-4 text-lg max-w-md">
-            Your social guide to the cinematic universe.
-        </p>
-
-        <div class="flex items-center mt-6 space-x-2">
-            <div class="flex -space-x-2">
-                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?u=1" alt="user">
-                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?u=2" alt="user">
-                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?u=3" alt="user">
+    <div id="success-overlay" class="fixed inset-0 z-[100] flex items-center justify-center p-4 gradient-bg bg-opacity-95">
+        <div class="bg-white border-[4px] border-black rounded-[2.5rem] p-8 md:p-12 max-w-lg w-full text-center shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden">
+            <div class="w-20 h-20 bg-white border-[3px] border-black rounded-full flex items-center justify-center mx-auto mb-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                <svg class="w-10 h-10 gradient-text" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="-webkit-text-fill-color: initial;">
+                    <path stroke="url(#svg-gradient)" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path>
+                    <defs>
+                        <linearGradient id="svg-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#FF3B3B;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#FF8E3B;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                </svg>
             </div>
-            <span class="text-sm text-gray-500 font-medium">Join +900 others</span>
-        </div>
 
-        <form action="YOUR_FORMSPREE_URL" method="POST" class="mt-10 flex flex-col md:flex-row items-center bg-gray-100 rounded-full p-2 w-full max-w-lg border border-gray-200">
-            <input 
-                type="email" 
-                name="email" 
-                placeholder="Email address" 
-                required
-                class="bg-transparent px-6 py-3 flex-grow focus:outline-none text-black"
-            >
-            <button type="submit" class="bg-black text-white px-8 py-3 rounded-full font-bold hover:bg-gray-800 transition w-full md:w-auto">
-                Get Early Access
+            <h2 class="text-4xl md:text-5xl font-[900] tracking-tighter leading-none mb-4 uppercase italic">You’re In the <br>Premiere Queue!</h2>
+            
+            <p class="text-gray-600 font-bold text-lg mb-8 leading-tight">
+                We’ll hit your inbox with a red carpet invite for early access. Get the popcorn ready, the show is about to start. 🍿✨
+            </p>
+
+            <div class="flex flex-col items-center space-y-4">
+                <div class="flex -space-x-3">
+                    <img class="w-10 h-10 rounded-full border-2 border-black shadow-md" src="https://i.pravatar.cc/100?u=1" alt="u1">
+                    <img class="w-10 h-10 rounded-full border-2 border-black shadow-md" src="https://i.pravatar.cc/100?u=8" alt="u2">
+                    <img class="w-10 h-10 rounded-full border-2 border-black shadow-md" src="https://i.pravatar.cc/100?u=15" alt="u3">
+                    <img class="w-10 h-10 rounded-full border-2 border-black shadow-md" src="https://i.pravatar.cc/100?u=22" alt="u4">
+                </div>
+                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">You're not alone, 900+ others struggle with movie/tv addiction!</span>
+            </div>
+
+            <button onclick="window.location.reload()" class="mt-10 bg-black text-white px-10 py-4 rounded-2xl font-black text-sm uppercase tracking-tighter hover:bg-rose-600 transition-colors w-full border-b-4 border-gray-800">
+                Back to Main Screen
             </button>
-        </form>
+        </div>
+    </div>
 
-        <div class="absolute top-[450px] left-0 w-full z-0 overflow-hidden opacity-80 pointer-events-none">
-            <div class="animate-scroll">
-                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=300" class="movie-card">
-                <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=300" class="movie-card">
-                <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=300" class="movie-card">
-                <img src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=300" class="movie-card">
-                <img src="https://images.unsplash.com/photo-1542204172-3c138f3214c7?w=300" class="movie-card">
-                <img src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?w=300" class="movie-card">
-                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=300" class="movie-card">
-                <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=300" class="movie-card">
-                <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=300" class="movie-card">
-                <img src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=300" class="movie-card">
+    <main class="flex flex-col items-center justify-center text-center min-h-[85vh] px-4 md:px-6 relative">
+        <div class="hidden lg:block absolute top-20 left-10 floating-card bg-yellow-400 p-4 rounded-xl border-2 border-black w-48 text-left" style="animation-delay: 0s;">
+            <p class="text-[10px] font-black uppercase mb-1 text-black">Pure Vibes</p>
+            <p class="font-bold text-sm leading-tight text-black">100% Ad-Free. No interruptions.</p>
+        </div>
+        
+        <div class="hidden lg:block absolute top-40 right-10 floating-card bg-rose-500 p-4 rounded-xl border-2 border-black w-48 text-left" style="animation-delay: 1.5s;">
+            <p class="text-[10px] font-black uppercase mb-1 text-black">The Small Screen</p>
+            <p class="font-bold text-sm leading-tight text-black">Discuss every episode. Series too.</p>
+        </div>
+
+        <div class="hidden lg:block absolute bottom-40 left-20 floating-card bg-green-400 p-4 rounded-xl border-2 border-black w-48 text-left" style="animation-delay: 3s;">
+            <p class="text-[10px] font-black uppercase mb-1 text-black">Real-Time</p>
+            <p class="font-bold text-sm leading-tight text-black">React live for friends to see.</p>
+        </div>
+
+        <div class="hidden lg:block absolute bottom-60 right-20 floating-card bg-blue-400 p-4 rounded-xl border-2 border-black w-48 text-left" style="animation-delay: 4.5s;">
+            <p class="text-[10px] font-black uppercase mb-1 text-black">Main Character</p>
+            <p class="font-bold text-sm leading-tight text-black">Show personality with GIFs.</p>
+        </div>
+
+        <div class="z-10 flex flex-col items-center w-full">
+            <div class="inline-block px-4 py-1.5 mb-6 text-[10px] font-black uppercase tracking-widest bg-yellow-400 rounded-full shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] border border-black">
+                🎬 NEVER WATCH ALONE
+            </div>
+            
+            <h1 class="text-5xl md:text-8xl font-[900] tracking-tighter leading-[0.85] mb-6">
+                Your Watchlist is <br><span class="gradient-text">Better with Friends.</span>
+            </h1>
+            
+            <p class="text-gray-600 text-lg md:text-xl font-bold max-w-2xl mb-8 leading-relaxed px-4">
+                Track your favorites, react in real-time with memes & stickers, and <span class="text-black underline decoration-rose-500 underline-offset-4">see what others are saying</span> while you watch. 🍿✨
+            </p>
+
+            <div class="flex items-center space-x-3 mb-10">
+                <div class="flex -space-x-3">
+                    <img class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white shadow-md" src="https://i.pravatar.cc/100?u=1" alt="u1">
+                    <img class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white shadow-md" src="https://i.pravatar.cc/100?u=8" alt="u2">
+                    <img class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white shadow-md" src="https://i.pravatar.cc/100?u=15" alt="u3">
+                </div>
+                <span class="text-[10px] md:text-xs font-black uppercase tracking-tight text-gray-900">Join 900+ at Filmoholics Anonymous</span>
+            </div>
+
+            <div id="form-container" class="w-full max-w-lg px-4 md:px-2">
+                <form id="waitlist-form" class="flex flex-col md:flex-row items-center bg-white rounded-2xl md:rounded-3xl p-1 w-full shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] border-2 border-black mb-12 relative">
+                    <input id="email-input" type="email" name="email" placeholder="Drop your email..." required class="bg-transparent px-5 py-4 flex-grow focus:outline-none text-black font-bold text-lg w-full">
+                    <button type="submit" id="submit-btn" class="bg-black text-white px-8 py-4 rounded-xl md:rounded-2xl font-black text-sm uppercase tracking-tighter hover:bg-rose-600 transition-colors w-full md:w-auto mt-1 md:mt-0">
+                        Secure Early Access
+                    </button>
+                </form>
             </div>
         </div>
-
-        <div class="mt-20 z-10 drop-shadow-2xl">
-            <img 
-                src="https://images.unsplash.com/photo-1616469829581-73993eb86b02?w=600" 
-                alt="App Mockup" 
-                class="w-[320px] rounded-[3rem] border-[8px] border-black shadow-2xl"
-            >
-        </div>
-
-        <footer class="mt-20 mb-10 text-gray-400 text-xs uppercase tracking-widest">
-            © Ritual Ltd 2026
-        </footer>
     </main>
+
+    <footer class="fixed bottom-6 w-full text-center text-gray-400 text-[10px] font-black uppercase tracking-[0.4em] pointer-events-none">
+        © Conflix | Never Watch Alone
+    </footer>
+
+    <script>
+        const supabaseUrl = 'https://veesfjsztlkdstuowibv.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZlZXNmanN6dGxrZHN0dW93aWJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1MTE4NDAsImV4cCI6MjA4NDA4Nzg0MH0.urlP5pIb8HDFKEXuIV1jDeHepeROiIsj5RQHJruavmQ';
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        const waitlistForm = document.getElementById('waitlist-form');
+        const overlay = document.getElementById('success-overlay');
+        const submitBtn = document.getElementById('submit-btn');
+
+        waitlistForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email-input').value;
+
+            submitBtn.innerText = "JOINING...";
+            submitBtn.disabled = true;
+
+            const { error } = await supabaseClient
+                .from('waitlist')
+                .insert([{ email: email }]);
+
+            if (error) {
+                console.error(error);
+                alert("Snagged! Use a different email or try again.");
+                submitBtn.innerText = "SECURE EARLY ACCESS";
+                submitBtn.disabled = false;
+            } else {
+                // Trigger Confetti
+                confetti({
+                    particleCount: 150,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#FF3B3B', '#FF8E3B', '#000000']
+                });
+                overlay.style.display = 'flex';
+            }
+        });
+    </script>
 </body>
 </html>
