@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conflix App | Never Watch Alone</title>
+    
+    <meta property="og:title" content="Conflix App | Never Watch Alone">
+    <meta property="og:description" content="Track your favorites, react in real-time with memes, and see what others are saying while you watch. Join Filmoholics Anonymous.">
+    <meta property="og:image" content="https://conflixapp.com/logo-big.png">
+    <meta property="og:url" content="https://conflixapp.com">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
     <link rel="icon" type="image/png" href="logo-big.png" >
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -122,6 +130,7 @@
                     <img class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white shadow-md" src="https://i.pravatar.cc/100?u=1" alt="u1">
                     <img class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white shadow-md" src="https://i.pravatar.cc/100?u=8" alt="u2">
                     <img class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white shadow-md" src="https://i.pravatar.cc/100?u=15" alt="u3">
+                    <img class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white shadow-md" src="https://i.pravatar.cc/100?u=22" alt="u4">
                 </div>
                 <span class="text-[10px] md:text-xs font-black uppercase tracking-tight text-gray-900">Join 900+ at Filmoholics Anonymous</span>
             </div>
@@ -167,7 +176,6 @@
                 submitBtn.innerText = "SECURE EARLY ACCESS";
                 submitBtn.disabled = false;
             } else {
-                // Trigger Confetti
                 confetti({
                     particleCount: 150,
                     spread: 70,
